@@ -12,6 +12,7 @@ namespace SomeExampleLibrary {
         public SomeMappingProfile() {
 
             CreateMap<SomeEntity, SomeDto>()
+                //This line seems to cause trouble
                 .ForMember(dto => dto.Ids, m => m.MapFrom(entity => entity.Elements.Select(e => e.Id)));
 
         }
