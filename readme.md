@@ -25,7 +25,7 @@ public class SomeService {
 ```
 
 
-This setup works fine and the application runs normally. Now consider we add three objects of the form:
+This setup works fine and the application runs normally. Now consider we add two classes of the form:
 ```C#
 public class SomeEntity {
     public virtual ICollection<string> Elements { get; set; }
