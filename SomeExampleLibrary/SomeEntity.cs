@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SomeExampleLibrary {
     public class SomeEntity {
 
-        public virtual ICollection<SomeElement> Elements { get; set; }
+        public virtual ICollection<string> Elements { get; set; }
 
     }
 }

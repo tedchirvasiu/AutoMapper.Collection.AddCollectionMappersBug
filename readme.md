@@ -28,17 +28,12 @@ public class SomeService {
 This setup works fine and the application runs normally. Now consider we add three objects of the form:
 ```C#
 public class SomeEntity {
-    public virtual ICollection<SomeElement> Elements { get; set; }
-}
-
-public class SomeElement {
-    public string Id { get; set; }
-    public string Name { get; set; }
+    public virtual ICollection<string> Elements { get; set; }
 }
 ```
 ```C#
 public class SomeDto {
-    public List<string> Ids { get; set; }
+    public List<string> Elements { get; set; }
 }
 ```
 With a mapping profile containing the following configuration:
@@ -47,16 +42,14 @@ public class SomeMappingProfile : Profile {
 
     public SomeMappingProfile() {
 
-        CreateMap<SomeEntity, SomeDto>()
-            //This line seems to cause trouble
-            .ForMember(dto => dto.Ids, m => m.MapFrom(entity => entity.Elements.Select(e => e.Id)));
+        CreateMap<SomeEntity, SomeDto>();
 
     }
 }
 ````
 
 Now the application will **hang forever** when trying to resolve SomeService, specifically when trying to resolve IMapper. It's somewhere internally but not sure where.
-Here's the weird part: commenting either the `AddCollectionMappers()` in **ProjectA** or **ProjectB** will resolve the issue. It hangs only when AddCollectionMappers() is called twice or more (even in succession in the same project). But the culprit seems to be the .ForMember expression in the mapping for the Elements collection. Any other ForMember expressions would not cause this weird behaviour.
+Here's the weird part: commenting either the `AddCollectionMappers()` in **ProjectA** or in **ProjectB** will resolve the issue. It hangs only when AddCollectionMappers() is called twice or more (even in succession in the same project).
 
 ### Example repo
 https://github.com/tedchirvasiu/AutoMapper.Collection.AddCollectionMappersBug

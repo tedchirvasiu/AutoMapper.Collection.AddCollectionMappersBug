@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SomeExampleLibrary {
     public class SomeDto {
 
-        public List<string> Ids { get; set; }
+        public List<string> Elements { get; set; }
 
     }
 }
